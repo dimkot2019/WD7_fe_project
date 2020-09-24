@@ -1,61 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useSelector,useDispatch } from 'react-redux';
+import React,{useEffect} from 'react';
+import FooterLogo from './components/footer/footer_logo';
+import FooterCopyr from './components/footer/footer_copyright';
+import FooterNav from './components/footer/footer_nav';
+import Subscribe from './components/subscribe/subscribe';
+import SideNav from './components/sidenav';
+import {fetchData} from './store/action_creatores';
 
 
-function CounterHeader (props) {
-
-    const { fio, email, phone, address } = props;
-  
-    return (<h4>ФИО: { fio },<br></br> 
-                Эл. почта: { email },<br></br>
-                Телефон: {phone},<br></br>
-                Адрес: {address} </h4>
-            );
-  }
-
-function App() {
+function App(props) {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchData())
+    },[])
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={ logo } className="App-logo" alt="logo" />
-          <CounterHeader fio = 'Семен Семеныч Горбунков' 
-                         email = 'gorbunkov@mail.ru' 
-                         phone = '555-55-55' 
-                         address = 'Москва ул. Первомайская 79 кв.21'
-                         />
-          <h1>Functional component</h1>
-        </header>
+      <div className="main-content-wrapper d-flex clearfix">
+
+         {/* <SideNav /> */}
+         {props.children} 
+
+         <Subscribe />
+
+        <footer className="footer_area clearfix">
+            <div className="container">
+                <div className="row align-items-center">
+                    <div className="col-12 col-lg-4">
+                        <div className="single_widget_area">
+                          <FooterLogo />
+
+                          <FooterCopyr /> 
+
+                        </div>
+                    </div>
+                    <div className="col-12 col-lg-8">
+                        <div className="single_widget_area">
+                            <div className="footer_menu">
+                                
+                            {/* <FooterNav /> */}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
       </div>
     );
-  }
-
-export class AppClass extends React.Component {
-
-  state = { 
-    fio: 'Семен Семеныч Горбунков',
-    email: 'gorbunkov@mail.ru',
-    phone: '555-55-55', 
-    address: 'Москва ул. Первомайская 79 кв.21'
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={ logo } className="App-logo" alt="logo" />
-          <CounterHeader fio={ this.state.fio } 
-                         email = { this.state.email }   
-                         phone = { this.state.phone }   
-                         address = { this.state.address }   
-                         />
-          <h1>Class-based component</h1>
-
-        </header>
-      </div>
-    );
-  }
 }
 
 export default App;
