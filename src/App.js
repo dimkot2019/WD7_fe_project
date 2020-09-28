@@ -17,7 +17,7 @@ function App(props) {
     return (
       <div className="main-content-wrapper d-flex clearfix">
 
-         {/* <SideNav /> */}
+         <SideNav />
          {props.children} 
 
          <Subscribe />
@@ -37,7 +37,7 @@ function App(props) {
                         <div className="single_widget_area">
                             <div className="footer_menu">
                                 
-                            {/* <FooterNav /> */}
+                            <FooterNav />
 
                             </div>
                         </div>

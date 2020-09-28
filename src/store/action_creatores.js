@@ -28,6 +28,34 @@ export function updateLoading(payload) {
   }
 }
 
+export function updateColor(payload) {
+  return {
+    type: ACT.UPDATE_COLOR,
+    payload,
+  }
+}
+
+export function updateBrand(payload) {
+  return {
+    type: ACT.UPDATE_BRAND,
+    payload,
+  }
+}
+
+export function updateCategory(payload) {
+  return {
+    type: ACT.UPDATE_CATEGORY,
+    payload,
+  }
+}
+
+export function updatePrice(payload) {
+  return {
+    type: ACT.UPDATE_PRICE,
+    payload,
+  }
+}
+
 export function fetchData(searchText) {
 
   return (dispatcher) => {
@@ -52,6 +80,66 @@ export function fetchData(searchText) {
       dispatcher(updateLoading(false)); // установить индикатор загрузки данных в FALSE (выключить спинер)
 
     });
+
+  }
+}
+
+export function fetchFilterData() {
+
+  return (dispatcher) => {
+
+    dispatcher(updateLoading(true)); // установить индикатор загрузки данных в ТРУ - включить спинер
+    const categoryData = fetch('http://test-api.ipromote.ru/API/CATEGORY/FIND');
+    const colorData = fetch('http://test-api.ipromote.ru/API/COLOR/FIND');
+    const brandData = fetch('http://test-api.ipromote.ru/API/BRAND/FIND');
+    const priceData = fetch('http://test-api.ipromote.ru/API/CATALOG/RANGE')
+
+    const allResponse = Promise.all([categoryData,colorData,brandData,priceData]);
+
+    allResponse.then (
+        (responseArr) => {
+          console.log('responseArr ->', responseArr);
+          return Promise.all([
+            responseArr[0].json(),
+            responseArr[1].json(),
+            responseArr[2].json(),
+            responseArr[3].json(),
+          ]);
+        }
+    ).then (
+        (dataArr) => {
+          dispatcher(updateColor(dataArr[1].data));
+          dispatcher(updateBrand(dataArr[2].data));
+          dispatcher(updateCategory(dataArr[0].data));
+          dispatcher(updatePrice(dataArr[3].data));
+        }
+    ).catch(
+        (error) => {
+          console.log ("ERROR ->", error)
+        }
+    ).finally(
+        () => {
+          dispatcher(updateLoading(false))
+        }
+    );
+
+    // data.then(response => {
+    //   return response.json();
+    // }).then(localData => {
+    //   // this.setState({movieList: data}); - остатки от вызова в классе (когда фетчинг данных из класса)
+    //   dispatcher(updateCatalogList(localData.data)); // записать в ридакс стор список фильмов
+
+    //   dispatcher(fetchSuccess()); // установить статус состояния загрузки - УСПЕШНО загружены данные
+    // }).catch((e) => {
+
+    //   dispatcher(fetchFailed()); // установить статус состояния загрузки - ПРОВАЛ данные НЕ удалось загрузить
+
+    //   console.log('Sabotage: data fetch ERROR.', e);
+    // }).finally(() => {
+
+    //   dispatcher(updateLoading(false)); // установить индикатор загрузки данных в FALSE (выключить спинер)
+
+    // });
 
   }
 }

@@ -2,22 +2,24 @@ import React from 'react';
 import testImage1 from '../../assets/product/product1.jpg';
 import testImage2 from '../../assets/product/product2.jpg';
 import testImage3 from '../../assets/core-img/cart.png';
+import {SERVER_IMAGES} from '../../utils/constants'
 
 
-function OneItem () {
+function OneItem (props) {
+    const {price, title, img_url} = props
     return (
         <div className="col-12 col-sm-6 col-md-12 col-xl-6">
                         <div className="single-product-wrapper">
                             <div className="product-img">
-                                <img src={testImage1} alt="" />
+                                <img src= {`${SERVER_IMAGES}${img_url}`} alt="" />
                                 <img className="hover-img" src={testImage2} alt="" />
                             </div>
                             <div className="product-description d-flex align-items-center justify-content-between">
                                 <div className="product-meta-data">
                                     <div className="line"></div>
-                                    <p className="product-price">$180</p>
+                                    <p className="product-price">${price}</p>
                                     <a href="product-details.html">
-                                        <h6>Modern Chair</h6>
+                                        <h6>{title}</h6>
                                     </a>
                                 </div>
                                 <div className="ratings-cart text-right">

@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import routes from './router/routes'
 import {Provider} from 'react-redux';
 import configureStore from './store/configure_store';
+import {   BrowserRouter as Router } from 'react-router-dom';
 
 const store = configureStore();
 
@@ -13,11 +14,13 @@ ReactDOM.render(
 
     <React.StrictMode>
         <Provider store = {store}>
-        <App>
-    { 
-        routes
-    },
+        <Router>    
+          <App>
+           { 
+              routes
+           },
         </App>
+        </Router>
         </Provider>
     </React.StrictMode>,
   document.getElementById('root')
