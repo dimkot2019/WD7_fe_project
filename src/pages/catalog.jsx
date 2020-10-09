@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 import {CATALOG} from '../router/url';
 
 function getCategoryID (categoryName,categoryList) {
-    
+
     let res = '';
     categoryList.forEach((item) => {
         if (item.url == categoryName) {res = item.id;};}
@@ -45,10 +45,14 @@ function CatalogPage(props) {
         finalCatalog = finalCatalog.filter(filterColor)
     }
 
-
-    const select = document.querySelector('#sortBydate').getElementsByTagName('option');
-
     
+    // const select = document.querySelector('#sortBydate');  // .getElementsByTagName('option')
+    // console.log('SELECT-->',select);
+    
+
+    const select = document.getElementById("sortBydate"); 
+    const options = select.getElementsByTagName("option");
+
 
     return (
         <>
