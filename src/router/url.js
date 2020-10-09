@@ -1,8 +1,9 @@
 export const ROOT = '/';
 export const CATALOG = '/catalog';
 export const CART = '/cart';
-export const VIEW_ONE = `{CATALOG}/:productID`;
+export const CATALOG_CATEGORY = `${CATALOG}/:categoryName`;
 export const CHECKOUT = '/checkout';
+export const VIEW_ONE = `${CATALOG}/info`;
 
 export const NAV = [
     {

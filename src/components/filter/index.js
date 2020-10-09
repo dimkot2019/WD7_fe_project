@@ -4,6 +4,7 @@ import {ColorFilter} from './byColor'
 import { PriceFilter } from './byPrice'
 import { CategoryFilter } from './byCategory'
 import { BrandFilter } from './byBrand'
+import { Sort } from './bySort'
 import {fetchFilterData} from '../../store/action_creatores'
 
 export function CatalogFilter () {

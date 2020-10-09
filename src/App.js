@@ -10,18 +10,17 @@ import {fetchData} from './store/action_creatores';
 
 function App(props) {
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(fetchData())
+    useEffect(() => {dispatch(fetchData())
     },[])
 
     return (
       <div className="main-content-wrapper d-flex clearfix">
-
-         <SideNav />
+           
+        <SideNav />
          {props.children} 
-
-         <Subscribe />
-
+       
+        <Subscribe />
+        
         <footer className="footer_area clearfix">
             <div className="container">
                 <div className="row align-items-center">
@@ -45,7 +44,7 @@ function App(props) {
                 </div>
             </div>
         </footer>
-
+          
       </div>
     );
 }

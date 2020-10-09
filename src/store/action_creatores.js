@@ -50,10 +50,40 @@ export function updateCategory(payload) {
 }
 
 export function updatePrice(payload) {
-  return {
-    type: ACT.UPDATE_PRICE,
-    payload,
-  }
+    return {
+      type: ACT.UPDATE_PRICE,
+      payload,
+    }
+}
+
+
+
+export function updateFilterCategory(payload) {
+    return {
+      type: ACT.UPDATE_FILTER_CATEGORY,
+      payload,
+    }
+}
+
+export function updateFilterBrand(payload) {
+    return {
+      type: ACT.UPDATE_FILTER_BRAND,
+      payload,
+    }
+}
+
+export function updateFilterColor(payload) {
+    return {
+      type: ACT.UPDATE_FILTER_COLOR,
+      payload,
+    }
+}
+
+export function updateFilterPrice(payload) {
+    return {
+      type: ACT.UPDATE_FILTER_PRICE,
+      payload,
+    }
 }
 
 export function fetchData(searchText) {
@@ -61,25 +91,25 @@ export function fetchData(searchText) {
   return (dispatcher) => {
 
     dispatcher(updateLoading(true)); // установить индикатор загрузки данных в ТРУ - включить спинер
+
     const data = fetch('http://test-api.ipromote.ru/API/CATALOG/FIND');
 
-    data.then(response => {
-      return response.json();
-    }).then(localData => {
-      // this.setState({movieList: data}); - остатки от вызова в классе (когда фетчинг данных из класса)
-      dispatcher(updateCatalogList(localData.data)); // записать в ридакс стор список фильмов
+    data.then(response => {return response.json();})
+        .then(localData => {
+          dispatcher(updateCatalogList(localData.data)); // записать в ридакс стор список фильмов
 
-      dispatcher(fetchSuccess()); // установить статус состояния загрузки - УСПЕШНО загружены данные
-    }).catch((e) => {
+          dispatcher(fetchSuccess()); // установить статус состояния загрузки - УСПЕШНО загружены данные
 
-      dispatcher(fetchFailed()); // установить статус состояния загрузки - ПРОВАЛ данные НЕ удалось загрузить
+      }).catch((e) => {
 
-      console.log('Sabotage: data fetch ERROR.', e);
-    }).finally(() => {
+          dispatcher(fetchFailed()); // установить статус состояния загрузки - ПРОВАЛ данные НЕ удалось загрузить
 
-      dispatcher(updateLoading(false)); // установить индикатор загрузки данных в FALSE (выключить спинер)
+          console.log('Sabotage: data fetch ERROR.', e);
+      }).finally(() => {
 
-    });
+          dispatcher(updateLoading(false)); // установить индикатор загрузки данных в FALSE (выключить спинер)
+
+      });
 
   }
 }

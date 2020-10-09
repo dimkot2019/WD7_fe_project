@@ -9,43 +9,49 @@ const initialStore = {
   colorList: [],
   brandList: [],
   priceRange: [],
+  filter: {
+      category: '',
+      brand: [],
+      color: '',
+      price: '',
+  }
 };
 
 function rootReducer(store = initialStore, action) {
 
   switch (action.type) {
 
-    case ACT.UPDATE_LIST: // случилось событие - обновить список фильмов
+    case ACT.UPDATE_LIST: 
       return {
         ...store,
         catalogList: action.payload,
       }
 
-    case ACT.UPDATE_LOADING: // случилось событие - обновить индикатор загрузки данных с сервера
+    case ACT.UPDATE_LOADING: 
       return {
         ...store,
         isLoading: action.payload,
       }
 
-    case ACT.UPDATE_COLOR: // случилось событие - обновить индикатор загрузки данных с сервера
+    case ACT.UPDATE_COLOR: 
       return {
         ...store,
         colorList: action.payload,
       }
 
-    case ACT.UPDATE_CATEGORY: // случилось событие - обновить индикатор загрузки данных с сервера
+    case ACT.UPDATE_CATEGORY: 
       return {
         ...store,
         categoryList: action.payload,
       }
 
-    case ACT.UPDATE_PRICE: // случилось событие - обновить индикатор загрузки данных с сервера
+    case ACT.UPDATE_PRICE: 
       return {
         ...store,
         priceRange: action.payload,
       }
 
-    case ACT.UPDATE_BRAND: // случилось событие - обновить индикатор загрузки данных с сервера
+    case ACT.UPDATE_BRAND: 
       return {
         ...store,
         brandList: action.payload,
@@ -58,7 +64,41 @@ function rootReducer(store = initialStore, action) {
         fetchStatus: action.payload,
       }
 
+      case ACT.UPDATE_FILTER_CATEGORY: 
+      return {
+        ...store,
+        filter: {
+            ...store.filter,
+            category: action.payload,
+        } 
+      }
 
+      case ACT.UPDATE_FILTER_BRAND: 
+      return {
+        ...store,
+        filter: {
+            ...store.filter,
+            brand: action.payload,
+        }
+      }
+
+      case ACT.UPDATE_FILTER_COLOR: 
+      return {
+        ...store,
+        filter: {
+            ...store.filter,
+            color: action.payload,
+        }
+      }
+
+      case ACT.UPDATE_FILTER_PRICE: 
+      return {
+        ...store,
+        filter: {
+            ...store.filter,
+            price: action.payload,
+        }
+      }
   }
 
   return store;
