@@ -3,11 +3,7 @@ import {useSelector,useDispatch} from "react-redux";
 import {updateFilterColor} from '../../store/action_creatores';
 
 export function ColorFilter () {
-    const dataList = useSelector(
-        (store)=>{
-            return store.app.colorList;
-        }
-    );
+    const dataList = useSelector((store)=> store.app.colorList);
     
     
     const dispatch = useDispatch();
@@ -20,8 +16,9 @@ export function ColorFilter () {
     // function handleClickReset() {
     //     dispatch(updateFilterColor(''));
     // }
-
+    
     function renderList (item) {
+        
         return (
         <li key={item.id}><a style={{
             backgroundColor: `#${item.color}`,
@@ -29,10 +26,13 @@ export function ColorFilter () {
             cursor: 'pointer'
         }}href={item.url} onClick= {handleClick}
           data-color={item.id}
+          
           >&nbsp;</a></li>
+           
         )
+             
     }
-
+    
 
     return (
         <div className="widget color mb-50">

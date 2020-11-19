@@ -15,6 +15,7 @@ const initialStore = {
       color: '',
       price: '',
   }
+  
 };
 
 function rootReducer(store = initialStore, action) {
@@ -24,7 +25,7 @@ function rootReducer(store = initialStore, action) {
     case ACT.UPDATE_LIST: 
       return {
         ...store,
-        catalogList: action.payload,
+        catalogList: [...action.payload],
       }
 
     case ACT.UPDATE_LOADING: 

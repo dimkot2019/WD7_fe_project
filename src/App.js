@@ -12,7 +12,7 @@ function App(props) {
     const dispatch = useDispatch();
     useEffect(() => {dispatch(fetchData())
     },[])
-
+    
     return (
       <div className="main-content-wrapper d-flex clearfix">
            
@@ -21,7 +21,7 @@ function App(props) {
        
         <Subscribe />
         
-        <footer className="footer_area clearfix">
+        <footer className="footer_area clearfix" style={{width: '100%'}}>
             <div className="container">
                 <div className="row align-items-center">
                     <div className="col-12 col-lg-4">
@@ -43,6 +43,7 @@ function App(props) {
                     </div>
                 </div>
             </div>
+            
         </footer>
           
       </div>

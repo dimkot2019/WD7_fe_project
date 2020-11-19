@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 import NavigationItem from '../navigationitem';
 
 function FooterNav (props) {
-console.log(props.location.pathname);
+// console.log(props.location.pathname);
 
     return (
                                 <nav className="navbar navbar-expand-lg justify-content-end">

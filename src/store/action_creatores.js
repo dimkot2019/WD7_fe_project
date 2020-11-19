@@ -96,7 +96,7 @@ export function fetchData(searchText) {
 
     data.then(response => {return response.json();})
         .then(localData => {
-          dispatcher(updateCatalogList(localData.data)); // записать в ридакс стор список фильмов
+          dispatcher(updateCatalogList(localData.data)); // записать в ридакс стор список
 
           dispatcher(fetchSuccess()); // установить статус состояния загрузки - УСПЕШНО загружены данные
 

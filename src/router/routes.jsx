@@ -19,7 +19,7 @@ export default (
       <Route exact path={ URL.CATALOG } component={ Catalog} /> {/* Маршруты - конкретные URL для которых отображаются конкретные компоненты */}
       <Route exact path={ URL.CART } component={ Cart } /> {/* Маршруты - конкретные URL для которых отображаются конкретные компоненты */}
       <Route exact path={ URL.CHECKOUT } component={ Checkout } /> {/* Маршруты - конкретные URL для которых отображаются конкретные компоненты */}
-      <Route exact path={ URL.VIEW_ONE } component={ ProductInfo } /> {/* Маршруты - конкретные URL для которых отображаются конкретные компоненты */}
+      <Route exact path={ `${URL.VIEW_ONE}/:id?` } component={ ProductInfo } /> {/* Маршруты - конкретные URL для которых отображаются конкретные компоненты */}
       <Route exact path={ URL.CATALOG_CATEGORY } component={ Catalog } /> {/* Маршруты - конкретные URL для которых отображаются конкретные компоненты */}
 
       {/* <Route exact path={ URL.MOVIES } component={ MovieListPage } />

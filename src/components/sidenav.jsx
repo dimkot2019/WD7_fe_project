@@ -3,6 +3,8 @@ import {NAV} from '../router/url';
 import NavigationItem from './navigationitem'
 
 function SideNav () {
+    // console.log('url',item.url);
+    
     return (
         <header className="header-area clearfix">
             <div className="nav-close">
@@ -13,6 +15,7 @@ function SideNav () {
             </div>
             <nav className="amado-nav">
                 <ul>
+
                 {
                     NAV.map((item)=> (<NavigationItem  
                     url = {item.url} 
@@ -22,6 +25,7 @@ function SideNav () {
                     />)
                     )
                 }
+
                 </ul>
             </nav>
             <div className="amado-btn-group mt-30 mb-100">

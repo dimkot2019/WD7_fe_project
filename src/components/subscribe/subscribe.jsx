@@ -3,7 +3,7 @@ import React from 'react';
 function Subscribe () {
 
     return (
-        <section className="newsletter-area section-padding-100-0">
+    <section className="newsletter-area section-padding-100-0" style={{width: '100%'}}>
         <div className="container">
             <div className="row align-items-center">
                 <div className="col-12 col-lg-6 col-xl-7">
