@@ -1,4 +1,8 @@
 // тут описываются названия экшенов для Redux'a
+export const CHANGE_CATALOGINFO_SORTORDER = 'CHANGE_SORT_ORDER';
+export const CHANGE_CATALOGINFO_ELEMENTSONPAGE = 'CHANGE_ELEMENTS_ON_PAGE';
+export const CHANGE_CATALOGINFO_PAGENUMBER = 'CHANGE_PAGE_NUMBER';
+
 export const UPDATE_LIST = 'UPDATE_LIST';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAILED = 'FETCH_FAILED';

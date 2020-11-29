@@ -1,24 +1,13 @@
 import React from 'react';
 import ProductsOfCart from '../components/catalogelement/productsOfCart';
-import { useSelector } from 'react-redux';
 
 
-function CartPage(props) {
+function CartPage () { 
 
-    const catalogList = useSelector((store)=> store.app.catalogList); 
+    let data = JSON.parse(localStorage.getItem('Cart')) || [];
 
-    let tL = [];
-
-    tL.push(catalogList[0]) ;
-
-    let data = JSON.parse(localStorage.getItem('Cart'));
-
-    if (!isNaN(data)) {
-        data = tL;
-        localStorage.setItem('Cart', JSON.stringify(tL)); 
-    } 
+    const subTotal = data.reduce(function(prev,current) {return prev.res5 + current.res5;});
     
-
     return (
                 <div className="cart-table-area section-padding-100">
                     <div className="container-fluid">
@@ -38,12 +27,14 @@ function CartPage(props) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            { data.length === 0 && 'Вы ничего не выбрали' }
                                             {
                                                 data.map((item)=> <ProductsOfCart
                                                     res1={item.res1}
                                                     res2={item.res2}
                                                     res3={item.res3}
+                                                    res4={item.res4}
+                                                    res5={item.res5}
                                                 /> )
                                             }
                                             
@@ -55,9 +46,9 @@ function CartPage(props) {
                                 <div className="cart-summary">
                                     <h5>Cart Total</h5>
                                     <ul className="summary-table">
-                                        <li><span>subtotal:</span> <span>$140.00</span></li>
+                                        <li><span>subtotal:</span> <span>${subTotal}</span></li>
                                         <li><span>delivery:</span> <span>Free</span></li>
-                                        <li><span>total:</span> <span>$140.00</span></li>
+                                        <li><span>total:</span> <span>${subTotal}</span></li>
                                     </ul>
                                     <div className="cart-btn mt-100">
                                         <a href="cart.html" className="btn amado-btn w-100">Checkout</a>

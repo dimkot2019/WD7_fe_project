@@ -26,11 +26,8 @@ export function ColorFilter () {
             cursor: 'pointer'
         }}href={item.url} onClick= {handleClick}
           data-color={item.id}
-          
           >&nbsp;</a></li>
-           
-        )
-             
+        )      
     }
     
 
@@ -50,12 +47,3 @@ export function ColorFilter () {
         </div>
     )
 }
-
-    // <li><a href="#" className="color1"></a></li>
-    // <li><a href="#" className="color2"></a></li>
-    // <li><a href="#" className="color3"></a></li>
-    // <li><a href="#" className="color4"></a></li>
-    // <li><a href="#" className="color5"></a></li>
-    // <li><a href="#" className="color6"></a></li>
-    // <li><a href="#" className="color7"></a></li>
-    // <li><a href="#" className="color8"></a></li>

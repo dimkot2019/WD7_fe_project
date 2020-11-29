@@ -9,18 +9,88 @@ const initialStore = {
   colorList: [],
   brandList: [],
   priceRange: [],
+
+  catalogInfo: {
+    sortOrder: 'возр',
+    elementsOnPage: 10,
+    pageNumber: 0,
+  },
+  
+
   filter: {
       category: '',
       brand: [],
       color: '',
       price: '',
   }
-  
+   
 };
+
+// псевдокод
+// const catalogInfo = {
+//   pageNumber: '1',
+//   sortOrder: 'возр' | 'убыв',
+//   elementsOnPage: 10,
+// };
+
+// const {pageNumber, sortOrder, elementsOnPage} = useSelector(({pageNumber, sortOrder, elementsOnPage}) => ({pageNumber, sortOrder, elementsOnPage}));
+
+// const startIndex = pageNumber * elementsOnPage;
+// const endIndex = startIndex + elementsOnPage;
+// const list = catalogList.slice(startIndex, endIndex);
+
+// const handleChangePage = (newPageNumber) => {
+//   // Dispatch доставляет экшен в редьюсер
+//   dispatch(changePageNumber(newPageNumber))
+// }
+
+// list.map(l => (<div>{l}</div>))
+
+// // Функция которая создает экшен
+// const changePageNumber = (newPageNumber) => ({
+//   type: ACT.CHANGE_PAGE_NUMBER,
+//   payload: newPageNumber,
+// });
 
 function rootReducer(store = initialStore, action) {
 
   switch (action.type) {
+
+    // Редьюсер меняет значение стора(изменяет стор) в зависимости от экшена
+    case ACT.CHANGE_CATALOGINFO_SORTORDER: 
+      return {
+        ...store,
+        catalogInfo: {
+            ...store.catalogInfo,
+        sortOrder: action.payload,
+      }
+    }
+
+
+
+    case ACT.CHANGE_CATALOGINFO_ELEMENTSONPAGE: 
+      return {
+        ...store,
+        catalogInfo: {
+            ...store.catalogInfo,
+        elementsOnPage: action.payload,
+      }
+    }
+
+
+
+    case ACT.CHANGE_CATALOGINFO_PAGENUMBER: 
+      return {
+        ...store,
+        catalogInfo: {
+            ...store.catalogInfo,
+            pageNumber: action.payload,
+        }
+      }
+
+
+
+    
 
     case ACT.UPDATE_LIST: 
       return {

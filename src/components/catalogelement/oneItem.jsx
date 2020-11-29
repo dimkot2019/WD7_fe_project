@@ -38,8 +38,7 @@ function OneItem (props) {
                             </div>
                         </div>
                     </div>
-    )
-    
+    )  
 }
 
 export default React.memo(OneItem );

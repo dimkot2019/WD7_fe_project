@@ -1,14 +1,15 @@
-import React,{useRef} from 'react';
+import React,{ useState } from 'react';
 import {SERVER_IMAGES} from '../utils/constants'
-import { useSelector,useDispatch } from 'react-redux';
-import {useParams} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 
 function ProductInfoPage () {
 
-    const { id } = useParams();
+    let [qty, setCount] = useState(1);
+    console.log('qty',qty);
 
-    let spanRef = useRef('');
+    const { id } = useParams();
 
     function postLocalStorage () {
         return new Promise((resolve, reject) => {
@@ -21,24 +22,11 @@ function ProductInfoPage () {
         });
     }
 
-    function handleClickQuantityMinus (e) {
-        let effect = document.getElementById('qty'); 
-        let qty = effect.value; 
+    function handleClickQuantityMinus () {
         if (!isNaN(qty) && qty > 1) {
-            effect.value--;
-            document.getElementById('qty').value = effect.value;
-            }
-        spanRef.current = document.getElementById('qty').value;
-        return false;
-    }
-    
-    function handleClickQuantityPlus (e) {
-        let effect = document.getElementById('qty'); 
-        let qty = effect.value; 
-        if(!isNaN(qty)) {
-            effect.value++;
+            setCount(qty - 1);
         }
-        return false;
+        return false;  
     }
 
     const catalogList = useSelector((store)=> store.app.catalogList);
@@ -51,6 +39,7 @@ function ProductInfoPage () {
     let res2 = '';
     let res3 = '';
     let res4 = '';
+    let res5 = '';
 
     catalogList.forEach((item) => { 
         if (item.id === id) {
@@ -58,8 +47,9 @@ function ProductInfoPage () {
             res1 = item.img_url;
             res2 = item.price;
             res3= item.title;
-            res4= document.getElementById('qty').value;
-            r = {res,res1,res2,res3,res4};      
+            res4 = qty;
+            res5 = res2 * qty;
+            r = {res,res1,res2,res3,res4,res5};      
         };}
     )
     
@@ -116,8 +106,8 @@ function ProductInfoPage () {
                                         <p>Qty</p>
                                         <div className="quantity">
                                             <span className="qty-minus"  onClick={handleClickQuantityMinus}><i className="fa fa-caret-down" aria-hidden="true"></i></span>
-                                            <input type="number" className="qty-text" id="qty" step="1" min="1" max="300" name="quantity"  defaultValue="15"/>
-                                            <span className="qty-plus" onClick={handleClickQuantityPlus}><i className="fa fa-caret-up" aria-hidden="true"></i></span>
+                                            <p style = {{position: 'relative', left: `45px`}}>{qty}</p>
+                                            <span className="qty-plus" onClick={() => setCount(qty + 1)}><i className="fa fa-caret-up" aria-hidden="true"></i></span>
                                         </div>
                                     </div>
                                     <button type="button" name="addtocart" value="5" onClick={postLocalStorage} className="btn amado-btn">Add to cart</button>

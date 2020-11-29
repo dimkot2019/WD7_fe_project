@@ -2,6 +2,30 @@
 // и вернуть JS объект, который в свою очередь будет описывать ACTION - событие в экосистеме Redux
 import * as ACT from './actions';
 
+export function changeSortOrder(newSortOrder) {
+  return {
+    type: ACT.CHANGE_CATALOGINFO_SORTORDER,
+    payload: newSortOrder,
+  };
+}
+
+export function changeElementsOnPage(newElementsOnPage) {
+  return {
+    type: ACT.CHANGE_CATALOGINFO_ELEMENTSONPAGE,
+    payload: newElementsOnPage,
+  };
+}
+
+export function changePageNumber(newPageNumber) {
+  return {
+    type: ACT.CHANGE_CATALOGINFO_PAGENUMBER,
+    payload: newPageNumber,
+  };
+}
+
+
+
+
 export function updateCatalogList(payload) {
   return { // это JS объект - и есть тот самый реальный Redux action
     type: ACT.UPDATE_LIST,

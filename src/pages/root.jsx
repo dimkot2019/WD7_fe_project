@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import OneProduct from '../components/catalogelement/oneProduct'
 
-function RootPage(props) {
+function RootPage (props) {
     const beforeCatalogList = useSelector((store)=> store.app.catalogList);
 
     function randomArr(arr) {
@@ -15,7 +15,7 @@ function RootPage(props) {
         return arr;
     }
     let cgList = randomArr(beforeCatalogList);
-    let i=0;
+    let i = 0;
 
     function filterId(item) {
         const left = ['0','50','0','50','0','50','0','50'];

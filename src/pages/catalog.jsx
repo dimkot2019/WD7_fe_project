@@ -1,9 +1,11 @@
-import React,{useRef} from 'react';
+import React from 'react';
 import OneItem from '../components/catalogelement/oneItem'
 import { useSelector,useDispatch } from 'react-redux';
 import { CatalogFilter } from '../components/filter/index'
 import * as dayjs from 'dayjs';
-import {updateCatalogList} from '../store/action_creatores';
+import {changePageNumber} from '../store/action_creatores';
+import {changeElementsOnPage} from '../store/action_creatores';
+import {changeSortOrder} from '../store/action_creatores';
 
 function getCategoryID (categoryName,categoryList) {
     let res = '';
@@ -16,10 +18,10 @@ function getCategoryID (categoryName,categoryList) {
 }
 
 function CatalogPage(props) {
+
     let dispatch = useDispatch();
-    let selectRef1 = useRef('');
-    let selectRef2 = useRef('');
     
+    let {sortOrder, elementsOnPage, pageNumber} = useSelector((store)=> store.app.catalogInfo);
 
     const catalogList = useSelector((store)=> store.app.catalogList);
 
@@ -29,18 +31,25 @@ function CatalogPage(props) {
 
     const CategoryID = getCategoryID (props.match.params.categoryName,categoryList);
     
-    const ColorID = filter.color;
+    const ColorID = filter.color;  
     
-        
+    
     function filterCategory (item) {
         return CategoryID === item.category;
     }
 
     function filterColor (item) {
         return ColorID === item.colors;
-      }
+    }
 
     let finalCatalog = catalogList;
+    if (sortOrder === 'убыв') {
+        finalCatalog = catalogList.sort(function(a, b){return dayjs(b.dt_in).unix() - dayjs(a.dt_in).unix() ;});
+    }
+    if (sortOrder === 'возр') {   
+        finalCatalog = catalogList.sort(function(a, b){return dayjs(a.dt_in).unix() - dayjs(b.dt_in).unix() ;});  
+    } 
+    
 
     if (props.match.params.categoryName) {
         finalCatalog = catalogList.filter(filterCategory)
@@ -48,88 +57,47 @@ function CatalogPage(props) {
     if (ColorID) {
         finalCatalog = finalCatalog.filter(filterColor)  
     }
-     
 
-    function handleChangeSortBySelectRef (e) {
-        selectRef1.current = e.target.options[e.target.selectedIndex].label;
-        if (selectRef1.current==='по возрастанию') {
-            finalCatalog = catalogList.sort(function(a, b){return dayjs(a.dt_in).unix() - dayjs(b.dt_in).unix() ;});
+
+    function handleSortOrder () {
+        if (sortOrder !== 'убыв') {
+            dispatch(changeSortOrder('убыв'));
         }
-        if (selectRef1.current==='по убыванию') {   
-            finalCatalog = catalogList.sort(function(a, b){return dayjs(b.dt_in).unix() - dayjs(a.dt_in).unix() ;});   
-        }
-        dispatch(updateCatalogList(finalCatalog));
+        if (sortOrder !== 'возр') {    
+            dispatch(changeSortOrder('возр'));
+        }     
+    }
+
+
+    function handleElementsOnPage (SyntheticEvent) {
+        const elementsOnPage = SyntheticEvent.currentTarget.options[SyntheticEvent.currentTarget.selectedIndex].label;
+        dispatch(changeElementsOnPage(elementsOnPage));
+        console.log('elementsOnPage',elementsOnPage);
+    }
+
+
+    function handleViewPage01 () {
+        dispatch(changePageNumber(0));
+    }
+
+    function handleViewPage02 () {
+        dispatch(changePageNumber(1));
     }
     
-    function handleChangeViewSelectRef (e) {
-        selectRef2.current = e.target.options[e.target.selectedIndex].label;
+    function handleViewPage03 () {
+        dispatch(changePageNumber(2));
+    }
+
+    function handleViewPage04 () {
+        dispatch(changePageNumber(3));
         
-        switch (selectRef2.current) {
-            case '10':
-                finalCatalog = catalogList.slice(0, 10);
-                break;
-            case '20':
-                finalCatalog = catalogList.slice(0, 20);
-                break;
-            case '30':
-                finalCatalog = catalogList.slice(0, 30);
-                break;
-            case '40':
-                finalCatalog = catalogList.slice(0, 40);
-                break;
-            default:
-                finalCatalog = catalogList;
-        } 
-        // dispatch(updateCatalogList(finalCatalog));    
     }
 
-    function handleClickPage_2(e) {
-        if (selectRef2.current==='10') {
-            finalCatalog = catalogList.slice(10, 20);
-        }
-        if (selectRef2.current==='20') {
-            finalCatalog = catalogList.slice(20, 40);
-        }
-        if (selectRef2.current==='30') {
-            finalCatalog = catalogList.slice(30, 60);
-        }
-        if (selectRef2.current==='40') {
-            finalCatalog = catalogList.slice(40, 80);
-        }
-        // dispatch(updateCatalogList(finalCatalog));    
-    }
-    function handleClickPage_3(e) {
-        if (selectRef2.current==='10') {
-            finalCatalog = catalogList.slice(20, 30);
-        }
-        if (selectRef2.current==='20') {
-            finalCatalog = catalogList.slice(40, 60);
-        }
-        if (selectRef2.current==='30') {
-            finalCatalog = catalogList.slice(60, 90);
-        }
-        if (selectRef2.current==='40') {
-            finalCatalog = catalogList.slice(80, 120);
-        }
-        // dispatch(updateCatalogList(finalCatalog));    
-    }
-    function handleClickPage_4(e) {
-        if (selectRef2.current==='10') {
-            finalCatalog = catalogList.slice(30, 40);
-        }
-        if (selectRef2.current==='20') {
-            finalCatalog = catalogList.slice(60, 80);
-        }
-        if (selectRef2.current==='30') {
-            finalCatalog = catalogList.slice(90, 120);
-        }
-        if (selectRef2.current==='40') {
-            finalCatalog = catalogList.slice(120, 160);
-        }
-        // dispatch(updateCatalogList(finalCatalog));    
-    }
+    const startIndex = pageNumber * elementsOnPage;
+    const endIndex = startIndex + Number(elementsOnPage);
+    const list = finalCatalog.slice(startIndex, endIndex);
     
-   
+    
     return (
         <>
         <CatalogFilter/>  
@@ -147,20 +115,18 @@ function CatalogPage(props) {
                             </div>
                             <div className="product-sorting d-flex">
                                 <div className="sort-by-date d-flex align-items-center mr-15">
-                                    <p>Sort by</p>
+                                    <p>Sort by date</p>
                                     <form action="#" method="get">
-                                        <select name="select" id="sortBydate"  onChange={handleChangeSortBySelectRef}>
-                                            <option value="value">date</option>
-                                            <option value="value">по возрастанию</option>
-                                            <option value="value">по убыванию</option>
+                                        <select name="select" id="sortBydate"  onChange={handleSortOrder}>
+                                            <option value="value">возр</option>
+                                            <option value="value">убыв</option>
                                         </select>
                                     </form>
                                 </div>
                                 <div className="view-product d-flex align-items-center">
                                     <p>View by</p>
                                     <form action="#" method="get">
-                                        <select name="select" id="viewProduct" onChange={handleChangeViewSelectRef}>
-                                            <option value="value">quantity</option>
+                                        <select name="select" id="viewProduct" onChange={handleElementsOnPage}>
                                             <option value="value">10</option>
                                             <option value="value">20</option>
                                             <option value="value">30</option>
@@ -173,7 +139,7 @@ function CatalogPage(props) {
                      </div>
 
                     {
-                        finalCatalog.map((item)=> <OneItem 
+                        list.map((item)=> <OneItem 
                             key={item.id} 
                             id={item.id}
                             title={item.title}
@@ -183,14 +149,13 @@ function CatalogPage(props) {
                         /> )
                     }
 
-                {/* <div className="row"> */}
                     <div className="col-12">
                         <nav aria-label="navigation">
                             <ul className="pagination justify-content-end mt-50">
-                                <li className="page-item "><a className="page-link active">01.</a></li>
-                                <li className="page-item"><a className="page-link" href="#" onClick={handleClickPage_2}>02.</a></li>
-                                <li className="page-item"><a className="page-link" href="#" onClick={handleClickPage_3}>03.</a></li>
-                                <li className="page-item"><a className="page-link" href="#" onClick={handleClickPage_4}>04.</a></li>
+                                <li className="page-item "><a className="page-link active" onClick={handleViewPage01}>01.</a></li>
+                                <li className="page-item"><a className="page-link" href="#" onClick={handleViewPage02}>02.</a></li>
+                                <li className="page-item"><a className="page-link" href="#" onClick={handleViewPage03}>03.</a></li>
+                                <li className="page-item"><a className="page-link" href="#" onClick={handleViewPage04}>04.</a></li>
                             </ul>
                         </nav>
                     </div>

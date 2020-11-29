@@ -2,8 +2,7 @@ import React from 'react';
 import {NAV} from '../router/url';
 import NavigationItem from './navigationitem'
 
-function SideNav () {
-    // console.log('url',item.url);
+function SideNav () {;
     
     return (
         <header className="header-area clearfix">
